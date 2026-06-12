@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import axios from "axios";
 
-import AppContext from "../Context/Context";
+import AppContext from "../context/Context";
 
 const Home = ({
   selectedCategory,

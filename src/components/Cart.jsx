@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import AppContext from "../Context/Context";
+import AppContext from "../context/Context";
 
 import axios from "axios";
 
-import CheckoutPopup from "./CheckoutPopup.jsx";
+import CheckoutPopup from "./CheckOutPopup.jsx";
 
 import { Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
