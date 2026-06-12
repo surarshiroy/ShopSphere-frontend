@@ -15,7 +15,7 @@ import Product from "./components/Product";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { AppProvider } from "./Context/Context";
+import { AppProvider } from "./context/Context";
 
 import UpdateProduct from "./components/UpdateProduct";
 
