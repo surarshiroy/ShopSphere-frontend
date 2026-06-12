@@ -41,7 +41,7 @@ const isAdmin = role === "ROLE_ADMIN";
 
         const response =
           await axios.get(
-            `http://localhost:8080/api/product/${id}`
+            `https://shopsphere-backend-v2.onrender.com/api/product/${id}`
           );
           console.log(response.data);
 
@@ -99,7 +99,7 @@ const isAdmin = role === "ROLE_ADMIN";
       <div>
 
         <img
-          src={`http://localhost:8080/api/product/${product.id}/image`}
+          src={`https://shopsphere-backend-v2.onrender.com/api/product/${product.id}/image`}
           alt={product.name}
           style={{
             width: isMobile ? "250px" : "340px",
@@ -292,7 +292,7 @@ height: isMobile ? "250px" : "340px",
             localStorage.getItem("token");
 
           await axios.delete(
-            `http://localhost:8080/api/product/${id}`,
+            `https://shopsphere-backend-v2.onrender.com/api/product/${id}`,
             {
               headers: {
                 Authorization:

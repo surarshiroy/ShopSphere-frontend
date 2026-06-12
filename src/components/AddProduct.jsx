@@ -73,7 +73,7 @@ const AddProduct = () => {
       );
 
       await axios.post(
-  "http://localhost:8080/api/product",
+  "https://shopsphere-backend-v2.onrender.com/api/product",
   formData,
   {
     headers: {

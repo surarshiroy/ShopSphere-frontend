@@ -319,7 +319,7 @@ const logout = () => {
 
                         const response =
                           await axios.get(
-                            `http://localhost:8080/api/products/search?keyword=${value}`
+                            `https://shopsphere-backend-v2.onrender.com/api/products/search?keyword=${value}`
                           );
                           console.log(response.data.content);
 

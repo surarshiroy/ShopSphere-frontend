@@ -36,7 +36,7 @@ const [toastType, setToastType] =
     try {
 
       await axios.post(
-        "http://localhost:8080/auth/register",
+        "https://shopsphere-backend-v2.onrender.com/auth/register",
         formData
       );
 

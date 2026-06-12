@@ -45,7 +45,7 @@ const UpdateProduct = () => {
 
           const response =
             await axios.get(
-              `http://localhost:8080/api/product/${id}`
+              `https://shopsphere-backend-v2.onrender.com/api/product/${id}`
             );
 
           setUpdateProduct(
@@ -54,7 +54,7 @@ const UpdateProduct = () => {
 
           const imageResponse =
             await axios.get(
-              `http://localhost:8080/api/product/${id}/image`,
+              `https://shopsphere-backend-v2.onrender.com/api/product/${id}/image`,
               {
                 responseType: "blob",
               }
@@ -141,7 +141,7 @@ const UpdateProduct = () => {
       const token = localStorage.getItem("token");
 
 await axios.put(
-  `http://localhost:8080/api/product/${id}`,
+  `https://shopsphere-backend-v2.onrender.com/api/product/${id}`,
   formData,
   {
     headers: {

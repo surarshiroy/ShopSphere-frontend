@@ -52,7 +52,7 @@ const Home = ({
 
           const response =
             await axios.get(
-              "http://localhost:8080/api/products"
+              "https://shopsphere-backend-v2.onrender.com/api/products"
             );
 
           const updatedProducts =
@@ -65,7 +65,7 @@ const Home = ({
 
                     const imageResponse =
                       await axios.get(
-                        `http://localhost:8080/api/product/${product.id}/image`,
+                        `https://shopsphere-backend-v2.onrender.com/api/product/${product.id}/image`,
                         {
                           responseType: "blob",
                         }
@@ -120,13 +120,13 @@ useEffect(() => {
       if (searchQuery) {
 
         response = await axios.get(
-          `http://localhost:8080/api/products/search?keyword=${searchQuery}`
+          `https://shopsphere-backend-v2.onrender.com/api/products/search?keyword=${searchQuery}`
         );
 
       } else {
 
         response = await axios.get(
-          "http://localhost:8080/api/products"
+          "https://shopsphere-backend-v2.onrender.com/api/products"
         );
 
       }
@@ -144,7 +144,7 @@ const updatedProducts =
 
                 const imageResponse =
                   await axios.get(
-                    `http://localhost:8080/api/product/${product.id}/image`,
+                    `https://shopsphere-backend-v2.onrender.com/api/product/${product.id}/image`,
                     {
                       responseType: "blob",
                     }

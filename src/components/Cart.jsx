@@ -45,7 +45,7 @@ const [toastType, setToastType] =
 
       try {
 
-        const response = await axios.get("http://localhost:8080/api/products");
+        const response = await axios.get("https://shopsphere-backend-v2.onrender.com/api/products");
 
         const backendProductIds = response.data.content.map((product) => product.id);
 
@@ -61,7 +61,7 @@ const [toastType, setToastType] =
 
               const response = await axios.get(
 
-                `http://localhost:8080/api/product/${item.id}/image`,
+                `https://shopsphere-backend-v2.onrender.com/api/product/${item.id}/image`,
 
                 { responseType: "blob" }
 
@@ -227,7 +227,7 @@ if (!token) {
   try {
 
     await axios.post(
-      "http://localhost:8080/api/checkout",
+      "https://shopsphere-backend-v2.onrender.com/api/checkout",
       {
         items: cartItems.map(item => ({
           productId: item.id,
