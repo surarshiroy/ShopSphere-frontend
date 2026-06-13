@@ -199,6 +199,100 @@ setCartItems(cartItemsWithImages);
 
   };
 
+  const handleRazorpayCheckout = async () => {
+
+  try {
+
+   const token = localStorage.getItem("token");
+  
+console.log("TOKEN =", token);
+
+const response = await axios.post(
+  "https://shopsphere-backend-v2.onrender.com/api/payment/create-order",
+  {
+    amount: totalPrice
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
+
+    const order = response.data;
+
+    console.log("ORDER =", order);
+
+    const options = {
+
+  key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+  amount: order.amount,
+
+  currency: order.currency,
+
+  name: "ShopSphere",
+
+  description: "Purchase",
+
+  order_id: order.id,
+
+  handler: async function(response) {
+
+    try {
+
+        await axios.post(
+          "https://shopsphere-backend-v2.onrender.com/api/checkout",
+          {
+            items: cartItems.map(item => ({
+              productId: item.id,
+              quantity: item.quantity
+            }))
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        clearCart();
+        setCartItems([]);
+
+        setToastMessage("Payment Successful");
+        setToastType("success");
+        setToastShow(true);
+
+    } catch(error) {
+
+        console.error(error);
+
+        setToastMessage(
+          "Payment succeeded but checkout failed"
+        );
+
+        setToastType("danger");
+        setToastShow(true);
+
+    } finally {
+
+        setShowModal(false);   // ALWAYS CLOSE MODAL
+    }
+}
+};
+
+const razorpay =
+  new window.Razorpay(options);
+
+razorpay.open();
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+};
+
 
 
   const handleCheckout = async () => {
@@ -452,7 +546,7 @@ setToastShow(true);
 
         totalPrice={totalPrice}
 
-        handleCheckout={handleCheckout}
+        handleCheckout={handleRazorpayCheckout}
 
       />
 
