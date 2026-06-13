@@ -171,7 +171,7 @@ height: isMobile ? "250px" : "340px",
             fontWeight: "700",
           }}
         >
-          ${product.price}
+          ₹{product.price}
         </h1>
 
         <button
