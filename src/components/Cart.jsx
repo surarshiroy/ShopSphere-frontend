@@ -485,7 +485,7 @@ setToastShow(true);
 
                   <div className="total-price " style={{ textAlign: "center" }}>
 
-                    ${item.price * item.quantity}
+                     ₹{item.price * item.quantity}
 
                   </div>
 
@@ -507,7 +507,7 @@ setToastShow(true);
 
             ))}
 
-            <div className="total">Total: ${totalPrice}</div>
+            <div className="total">Total:  ₹{totalPrice}</div>
 
             <Button
 

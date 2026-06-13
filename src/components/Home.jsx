@@ -311,7 +311,7 @@ const filteredProducts =
                         marginBottom: "20px",
                       }}
                     >
-                      ${price}
+                       ₹{price}
                     </h4>
 
                   </div>
