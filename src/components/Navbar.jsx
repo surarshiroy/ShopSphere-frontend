@@ -1,5 +1,10 @@
 
-import React, { useContext, useState } from "react";
+import React, {
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -20,9 +25,11 @@ const Navbar = ({
 
   const { cart } =
     useContext(AppContext);
+    const [searchText, setSearchText] = useState("");
 
   const navigate =
     useNavigate();
+    const searchRef = useRef(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const token = localStorage.getItem("token");
     
@@ -43,6 +50,36 @@ const logout = () => {
   window.location.reload();
 
 };
+useEffect(() => {
+
+  const handleClickOutside = (event) => {
+
+    if (
+      searchRef.current &&
+      !searchRef.current.contains(event.target)
+    ) {
+
+      setSuggestions([]);
+
+    }
+
+  };
+
+  document.addEventListener(
+    "mousedown",
+    handleClickOutside
+  );
+
+  return () => {
+
+    document.removeEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+  };
+
+}, [setSuggestions]);
 
   return (
 
@@ -288,6 +325,7 @@ const logout = () => {
               {/* SEARCH */}
 
               <div
+              ref={searchRef}
   className="my-2 my-lg-0"
   style={{
     position: "relative",
@@ -300,6 +338,7 @@ const logout = () => {
                   className="form-control me-3"
                   type="search"
                   placeholder="Search"
+                   value={searchText}
                   aria-label="Search"
                   style={{
                     width: "100%",
@@ -308,6 +347,7 @@ const logout = () => {
 
                     const value =
                       e.target.value;
+                      setSearchText(value);
 
                     onSearch(value);
 
@@ -337,11 +377,11 @@ const logout = () => {
 
                     } else {
 
-                      setSuggestions(
-                        []
-                      );
+    onSearch("");
 
-                    }
+    setSuggestions([]);
+
+}
 
                   }}
                 />
@@ -391,17 +431,17 @@ const logout = () => {
                             borderBottom:
                               "1px solid #eee",
                           }}
-                          onClick={() => {
+                        onClick={() => {
 
-                            setSuggestions(
-                              []
-                            );
+    setSearchText("");
 
-                            navigate(
-                              `/product/${item.id}`
-                            );
+    onSearch("");
 
-                          }}
+    setSuggestions([]);
+
+    navigate(`/product/${item.id}`);
+
+}}
                         >
 
                           <strong>

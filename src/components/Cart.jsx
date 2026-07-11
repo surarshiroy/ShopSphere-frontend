@@ -201,9 +201,29 @@ setCartItems(cartItemsWithImages);
 
   const handleRazorpayCheckout = async () => {
 
+     const token = localStorage.getItem("token");
+
+    if (!token) {
+
+        setShowModal(false);
+
+        setToastMessage("Please login before checkout");
+
+        setToastType("danger");
+
+        setToastShow(true);
+
+        setTimeout(() => {
+            navigate("/login");
+        }, 2000);
+
+        return;
+    }
+
+
   try {
 
-   const token = localStorage.getItem("token");
+   
   
 console.log("TOKEN =", token);
 

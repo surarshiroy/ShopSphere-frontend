@@ -24,6 +24,7 @@ const Home = ({
 
   const [products, setProducts] =
     useState([]);
+    const [loading, setLoading] = useState(true);
 
   const [isDataFetched, setIsDataFetched] =
     useState(false);
@@ -87,6 +88,7 @@ const Home = ({
                       ...product,
                       imageUrl:
                         "https://via.placeholder.com/300",
+                        
                     };
 
                   }
@@ -96,10 +98,12 @@ const Home = ({
             );
 
           setProducts(updatedProducts);
+          setLoading(false);
 
         } catch (error) {
 
           console.error(error);
+          setLoading(false);
 
         }
 
@@ -111,13 +115,13 @@ const Home = ({
 
 useEffect(() => {
 
-  const searchProducts = async () => {
+  const fetchProducts = async () => {
 
     try {
 
       let response;
 
-      if (searchQuery) {
+      if (searchQuery.trim()) {
 
         response = await axios.get(
           `https://shopsphere-backend-v2.onrender.com/api/products/search?keyword=${searchQuery}`
@@ -131,62 +135,157 @@ useEffect(() => {
 
       }
 
-     const productsArray = searchQuery
-  ? response.data
-  : response.data.content;
+      const productsArray =
+        searchQuery.trim()
+          ? response.data
+          : response.data.content;
 
-const updatedProducts =
-  await Promise.all(
-    productsArray.map(
-      async (product) => {
+      const updatedProducts =
+        await Promise.all(
 
-              try {
+          productsArray.map(async (product) => {
 
-                const imageResponse =
-                  await axios.get(
-                    `https://shopsphere-backend-v2.onrender.com/api/product/${product.id}/image`,
-                    {
-                      responseType: "blob",
-                    }
-                  );
+            try {
 
-                const imageUrl =
+              const imageResponse =
+                await axios.get(
+                  `https://shopsphere-backend-v2.onrender.com/api/product/${product.id}/image`,
+                  {
+                    responseType: "blob",
+                  }
+                );
+
+              return {
+
+                ...product,
+
+                imageUrl:
                   URL.createObjectURL(
                     imageResponse.data
-                  );
+                  ),
 
-                return {
-                  ...product,
-                  imageUrl,
-                };
+              };
 
-              } catch {
+            } catch {
 
-                return {
-                  ...product,
-                  imageUrl:
-                    "https://via.placeholder.com/300",
-                };
+              return {
 
-              }
+                ...product,
+
+                imageUrl:
+                  "https://via.placeholder.com/300",
+
+              };
 
             }
-          )
+
+          })
+
         );
 
       setProducts(updatedProducts);
 
-    } catch (error) {
+      setLoading(false);
 
-      console.error(error);
+    }
+
+    catch(error){
+
+      console.log(error);
+
+      setLoading(false);
 
     }
 
   };
 
-  searchProducts();
+  fetchProducts();
 
 }, [searchQuery]);
+if (loading) {
+
+  return (
+
+    <div
+      className="d-flex flex-wrap gap-4"
+      style={{
+        padding: "25px",
+        justifyContent: "center",
+        marginTop: "60px",
+      }}
+    >
+
+      {Array.from({ length: 8 }).map((_, index) => (
+
+        <div
+          key={index}
+          className="card placeholder-glow"
+          style={{
+            width: "100%",
+            maxWidth: "350px",
+            borderRadius: "16px",
+            border: "none",
+            overflow: "hidden",
+            boxShadow:
+              "0 4px 12px rgba(0,0,0,0.1)",
+          }}
+        >
+
+          <span
+            className="placeholder"
+            style={{
+              height: "220px",
+              width: "100%",
+            }}
+          ></span>
+
+          <div className="card-body">
+
+            <p className="placeholder-glow">
+              <span className="placeholder col-8"></span>
+            </p>
+
+            <p className="placeholder-glow">
+              <span className="placeholder col-6"></span>
+            </p>
+
+            <p className="placeholder-glow">
+              <span className="placeholder col-4"></span>
+            </p>
+
+            <button
+              className="btn btn-primary disabled placeholder col-12"
+            >
+            </button>
+
+          </div>
+
+        </div>
+
+      ))}
+
+      <div
+        className="w-100 text-center mt-4"
+      >
+
+        <h3>
+          Starting ShopSphere...
+        </h3>
+
+        <p
+          className="text-muted"
+        >
+          Backend is waking up for the first request.
+          This can take around a minute on Render's free tier.
+        </p>
+
+      </div>
+
+    </div>
+
+  );
+
+}
 
 const filteredProducts =
   selectedCategory
